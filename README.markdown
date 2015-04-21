@@ -2,7 +2,15 @@
 
 ## Description:
 
-term_extract extracts proper nouns (named things like 'Manchester United') and ordinary nouns (like 'event') from text documents.
+The original Term-extract gem depends on the rbtagger gem for POS recognition.
+
+I noticed a major bug with rbtagger. Under heavy load, ruby reports a buffer overflow, which points at the .so files used by rbtagger. Parallel processing over large document sets was impossible.
+This gem eliminates the need for the rbtagger gem, and instead ports the engtagger gem for the POS recognition.
+
+This combination works well under heavy load, and does not report any buffer overflow errors, even when processing over 1.3 million documents, over 12 cpu cores, in a multithreaded sidekiq driven ruby program.
+The syntax and all other features remain unchanged.
+
+Term_extract extracts proper nouns (named things like 'Manchester United') and ordinary nouns (like 'event') from text documents.
 
 ## Usage:
 
