@@ -3,7 +3,7 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
-#gem 'rbtagger', "~>0.4.7"
+gem 'rbtagger', "~>0.4.7"
 
 gem 'engtager', ">=0"
 
