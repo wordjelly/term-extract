@@ -1,4 +1,5 @@
-require 'rbtagger'
+#require 'rbtagger'
+require 'engtagger'
 
 # Based on :
 # http://pypi.python.org/pypi/topia.termextract/
@@ -8,8 +9,8 @@ class TermExtract
   @@SEARCH=0
   @@NOUN=1
 
-  @@TAGGER = Brill::Tagger.new
-
+  #@@TAGGER = Brill::Tagger.new 
+   @@ENGTAGGER = EngTagger.new
   attr_accessor :min_occurance, :min_terms, :types, :include_tags, :lazy
 
   # Provide a class method for syntactic sugar
@@ -37,10 +38,14 @@ class TermExtract
     # Tidy content punctuation
     # Add a space after periods
     content.gsub!(/([A-Za-z0-9])\./, '\1. ')
-    
-    # Assign POS tags and tidy tag stack
-    tagger = @@TAGGER.nil? ? Brill::Tagger.new : @@TAGGER
-    tags = preprocess_tags(tagger.tag(content))
+    engtagger_tgr = @@ENGTAGGER.nil? ? EngTagger.new : @@ENGTAGGER
+    engtagger_tags = engtagger_tgr.get_readable(content)
+    array_of_tags = engtagger_tags.split(/\s/) 
+    array_of_tags.map!{|c|
+	c = c.split(/\//)
+	
+    }	
+    tags = preprocess_tags(array_of_tags)
 
     # Set pos tags that identify nouns
     pos = "^NN"
