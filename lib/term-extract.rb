@@ -40,6 +40,12 @@ class TermExtract
     content.gsub!(/([A-Za-z0-9])\./, '\1. ')
     engtagger_tgr = @@ENGTAGGER.nil? ? EngTagger.new : @@ENGTAGGER
     engtagger_tags = engtagger_tgr.get_readable(content)
+    
+    ##in case the text is empty and there are no tags available.
+    if engtagger_tags.nil?
+    	return nil	
+    end
+    
     array_of_tags = engtagger_tags.split(/\s/) 
     array_of_tags.map!{|c|
 	c = c.split(/\//)
