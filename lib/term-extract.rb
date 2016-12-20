@@ -78,6 +78,11 @@ class TermExtract
         # Allow things like 'Good' at the start of sentences
         state = @@NOUN
         add_term(term, tag, multiterm, terms)
+      elsif state == @@SEARCH and (tag == 'JJ' || tag == 'RB')
+        ##allow adjectives,adverbs 
+        ##eg : first name, fastest horse
+        state = @@NOUN
+        add_term(term,tag,multiterm,terms)
       elsif state == @@NOUN and tag == 'POS'
         # Allow nouns with apostrophes : St Paul's Cathedral
         multiterm << [term,tag]
